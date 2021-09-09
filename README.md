@@ -1,2 +1,2 @@
 # performance-calculators
-Scripts to estimate and optimize amature high power rocket designs
+Scripts to estimate and optimize amateur high power rocket designs

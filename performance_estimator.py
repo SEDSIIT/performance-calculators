@@ -4,9 +4,14 @@ metrics required for a rocket to achieve the desired height.
 
 This program is heavily inspired by the OpenRocket technical documentation
 link to documentation: http://openrocket.sourceforge.net/techdoc.pdf
+
+To Do:
+- better define the rocket 
+- fix up drag equations and include them in calculation
+- fix thrust for multistaging and easily swap motor profiles
+- present calculations better
 '''
 ### Include Start ###
-from sys import api_version
 import matplotlib.pyplot as plt
 import numpy as np
 from ambiance import Atmosphere
@@ -199,7 +204,7 @@ def total_drag (height, velocity): # to do
     return drag_force # Newtons
 
 def total_thrust (time): # to do 
-    if (time < 2.75):
+    if (time < 2.75): # these figures are based off of O5289X-PS motor
         thrust = 6227
     elif (2.75 <= time and time < 4.5):
         thrust  = -3560 * (time - 2.75) +  3560
@@ -214,10 +219,12 @@ def total_mass (time):
 
 ### Setup Start ###
 altitude_current = altitude_start
+altitude_previous = altitude_current
 iteration = 0
 time = 0
 velocity = 0
 velocity_previous = 0
+
 class data:
     time = []
     altitude = []
@@ -242,8 +249,11 @@ while (altitude_current < altitude_end):
     mass = total_mass(time)
     acceleration = ((thrust - drag) / mass) - 9.81 
     velocity = velocity_previous + acceleration * delta_time
-    altitude_current = (velocity_previous + velocity) * (delta_time / 2)
+    altitude_current = (velocity_previous + velocity) * (delta_time / 2) + altitude_previous
 
+    # Give an update of the calculation to the user
+    if ((round(time, 2) % 1) == 0):
+        print("Current time : %2.0f sec     Alt: %3.0f m     Vel: %3.0f m/s" % (time, altitude_current, velocity))
 
     # Stop loop if goal is not achieved
     if (time > 10 and altitude_current <= 0):
@@ -260,6 +270,7 @@ while (altitude_current < altitude_end):
 
     # Time step
     velocity_previous = velocity
+    altitude_previous = altitude_current
     time += delta_time
 
 # Show results

@@ -22,12 +22,11 @@ a plot should show.
 
 Written By: Michael Gromski
 '''
-from ntpath import join
 from ambiance import Atmosphere
 import matplotlib.pyplot as plt
 import numpy as np
 import csv
-import os.path
+import os
 
 class fin: # <---------------- Edit fin dimensions here
     root_chord = 6.900 # inches
@@ -82,8 +81,8 @@ def main():
     altitude_step = 100
 
     PATH = os.path.dirname(__file__)
-    filepath_sustainer_flight = join(PATH,flight_sim_data.sustainer.filename)
-    filepath_booster_flight = join(PATH, flight_sim_data.booster.filename)
+    filepath_sustainer_flight = os.path.join(PATH,flight_sim_data.sustainer.filename)
+    filepath_booster_flight = os.path.join(PATH, flight_sim_data.booster.filename)
 
     flight_sim_data.sustainer.altitude, flight_sim_data.sustainer.speed = get_flight_data(filepath_sustainer_flight)
     flight_sim_data.booster.altitude, flight_sim_data.booster.speed = get_flight_data(filepath_booster_flight)

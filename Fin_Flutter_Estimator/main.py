@@ -1,7 +1,24 @@
 '''
-Calculates fin flutter speeds at varying altitudes
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+
+INFO:
+Calculates fin flutter speeds at varying altitudes and based off of this 
+documentation: https://apogeerockets.com/education/downloads/Newsletter291.pdf
+
+WARNING:
 Assumes fin is a trapizoidal shape
 Simulated flight data was exported directly from OpenRocket
+
+HOW TO USE:
+Need to only edit where the arrows (<---) are to change parameters for
+different fins/rockets the rest can be left unchanged. Run the script then
+a plot should show.
 
 Written By: Michael Gromski
 '''
@@ -12,14 +29,14 @@ import numpy as np
 import csv
 import os.path
 
-class fin:
+class fin: # <---------------- Edit fin dimensions here
     root_chord = 6.900 # inches
     tip_chord = 2.953 # inches
     height = 2.953 # inches
     thickness = 0.157 # inches
     shear_modulus = 280000 # PSI 
 
-class flight_sim_data:
+class flight_sim_data: # <----- Edit sim file name here
     class sustainer:
         filename = 'Big_Red_Sustainer.csv'
         altitude = []
@@ -58,9 +75,9 @@ def get_flight_data(filepath):
     file.close()
     return alt, speed
 
-def main():
+def main(): 
     ### Setup Start ###
-    altitude = 0
+    altitude = 0 # <------------- Edit calc range here
     max_altitude = 35000 # feet
     altitude_step = 100
 
